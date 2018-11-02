@@ -28,7 +28,7 @@ For example, given the above Scores table, your query should generate the follow
 | 3.50  | 4    |
 +-------+------+
 
-Solution 1:
+Solution 1: (won't work in MYSQL, but can use variables to mimic --> https://www.folkstalk.com/2013/03/grouped-dense-rank-function-mysql-sql-query.html)
 
 
 SELECT
@@ -40,7 +40,6 @@ FROM
 * note:
 
 RANK gives you the ranking within your ordered partition. Ties are assigned the same rank, with the next ranking(s) skipped. So, if you have 3 items at rank 2, the next rank listed would be ranked 5.
-
 DENSE_RANK again gives you the ranking within your ordered partition, but the ranks are consecutive. No ranks are skipped if there are ranks with multiple items.
 
 
@@ -51,7 +50,7 @@ from scores b where a.score < b.score) Rank
 from scores a order by a.score desc;
 
 
-Solution 3:
+Solution 3: USING VARIABLES
 
 SELECT
   Score,
@@ -61,3 +60,14 @@ FROM
   (SELECT @rank := 0, @prev := -1) init
 ORDER BY Score DESC;
 
+
+
+SELECT 
+    Score, 
+    @rank := @rank + 
+    CASE WHEN
+        @score <> (@score := Score) 
+    THEN 1 ELSE 0 
+    END as Rank
+FROM Scores, (SELECT @score := -1, @rank := 0) init
+ORDER BY Score DESC;
