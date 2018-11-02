@@ -28,7 +28,7 @@ For example, given the above Scores table, your query should generate the follow
 | 3.50  | 4    |
 +-------+------+
 
-Solution 1: (won't work in MYSQL, but can use variables to mimic --> https://www.folkstalk.com/2013/03/grouped-dense-rank-function-mysql-sql-query.html)
+Solution 1: (won't work in MYSQL < 8.0 version, but can use variables to mimic the process --> https://www.folkstalk.com/2013/03/grouped-dense-rank-function-mysql-sql-query.html)
 
 
 SELECT
